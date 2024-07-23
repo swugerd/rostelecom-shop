@@ -1,0 +1,58 @@
+body {
+  font-family: Rostelecom Basis;
+  font-weight: 400;
+  background-color: #1D2533;
+  color: #E8E9EA;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1535px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.btn-reset {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.list-reset {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+@font-face {
+  font-family: 'Rostelecom Basis';
+  src: url('../../public/fonts/Rostelecom-Basis-Bold.woff') format("woff");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rostelecom Basis';
+  src: url('../../public/fonts/Rostelecom-Basis-Medium.woff') format("woff");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rostelecom Basis';
+  src: url('../../public/fonts/Rostelecom-Basis-Regular.woff') format("woff");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.overflow-hidden {
+  overflow-y: hidden;
+  padding-right: 8px;
+}
