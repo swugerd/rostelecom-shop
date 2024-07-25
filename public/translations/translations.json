@@ -3,7 +3,8 @@
         "common": {
             "more": "More",
             "order_price": "Order price",
-            "ad": "Ad"
+            "ad": "Ad",
+            "all_link": "All"
         },
         "header": {
             "menu_btn": "Menu",
@@ -89,7 +90,8 @@
         "common": {
             "more": "Ещё",
             "order_price": "Сумма заказа",
-            "ad": "Реклама"
+            "ad": "Реклама",
+            "all_link": "Все"
         },
         "header": {
             "menu_btn": "Меню",

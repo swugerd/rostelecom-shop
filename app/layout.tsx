@@ -9,6 +9,8 @@ import './globalStyles/menu.css'
 import './globalStyles/mobile-navbar.css'
 import './globalStyles/normalize.css'
 import './globalStyles/search-modal.css'
+import './globalStyles/slick-theme.css'
+import './globalStyles/slick.css'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
