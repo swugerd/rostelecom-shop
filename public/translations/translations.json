@@ -51,6 +51,13 @@
             "office": "Office",
             "souvenirs": "Souvenirs",
             "order": "Placing an order"
+        },
+        "footer": {
+            "copyright": "Rostelectom All rights reserverd",
+            "policy": "Data processing policy",
+            "privacy": "Privacy policy",
+            "mobile_version": "Mobile version",
+            "full_version": "Full version of the site"
         }
     },
     "ru": {
@@ -105,6 +112,13 @@
             "office": "Концелярия",
             "souvenirs": "Сувениры",
             "order": "Оформление заказа"
+        },
+        "footer": {
+            "copyright": "Ростелеком Все права защищены",
+            "policy": "Политика обработки данных",
+            "privacy": "Политика конфиденциальности",
+            "mobile_version": "Мобильная версия",
+            "full_version": "Полная версия сайта"
         }
     }
 }

@@ -5,6 +5,7 @@ import { handleCloseSearchModal } from '@/lib/utils/common'
 import { useUnit } from 'effector-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FC, PropsWithChildren } from 'react'
+import Footer from '../modules/Footer/Footer'
 import Header from '../modules/Header/Header'
 import SearchModal from '../modules/Header/SearchModal'
 import MobileNavbar from '../modules/MobileNavbar/MobileNavbar'
@@ -33,7 +34,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         className={`header__search-overlay ${searchModal ? 'overlay-active' : ''}`}
         onClick={handleCloseSearchModal}
       />
-      <div className='' />
+      <Footer />
     </>
   )
 }

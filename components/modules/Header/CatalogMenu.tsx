@@ -155,7 +155,7 @@ const CatalogMenu = () => {
               <ul className='list-reset catalog-menu__list'>
                 {items.map(({ id, name, items, handler }) => {
                   const buttonProps = (isActive: boolean) => ({
-                    handler: handler as VoidFunction,
+                    handler,
                     name,
                     isActive,
                   })
