@@ -1,10 +1,13 @@
 'use client'
+import ProductSubtitle from '@/components/elements/ProductSubtitle/ProductSubtitle'
 import { AllowedLangs } from '@/constants/lang'
 import { useLang } from '@/hooks/useLang'
 import img1 from '@/public/img/black-t.png'
 import img2 from '@/public/img/orange-t.png'
 import img3 from '@/public/img/violet-t.png'
+import sAd from '@/styles/ad/index.module.scss'
 import s from '@/styles/main-page/index.module.scss'
+import ProductSubtitleS from '@/styles/productSubtitle/index.module.scss'
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import { EffectCoverflow } from 'swiper/modules'
@@ -14,8 +17,6 @@ import HeroSlide from './HeroSlide'
 
 const Hero = () => {
   const { lang, translations } = useLang()
-
-  const descriptionSlicePosition = lang === AllowedLangs.RU ? 5 : 2
 
   const slides = [
     {
@@ -43,7 +44,7 @@ const Hero = () => {
         {translations[lang].main_page.hero_hidden_title}
       </h1>
       <div className={`container ${s.hero__container}`}>
-        <span className={s.ad}>{translations[lang].common.ad}</span>
+        <span className={sAd.ad}>{translations[lang].common.ad}</span>
         <Swiper
           className={s.hero__slider}
           effect='coverflow'
@@ -67,21 +68,12 @@ const Hero = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className={s.hero__subtitle}>
-          <div className={s.hero__subtitle__rect} />
-          <span>
-            {translations[lang].main_page.hero_description.slice(
-              0,
-              descriptionSlicePosition
-            )}
-          </span>
-          <br />
-          <span>
-            {translations[lang].main_page.hero_description.slice(
-              descriptionSlicePosition
-            )}
-          </span>
-        </div>
+        <ProductSubtitle
+          subtitleClassName={ProductSubtitleS.product_subtitle__subtitle}
+          subtitleRectClassName={
+            ProductSubtitleS.product_subtitle__subtitle__rect
+          }
+        />
       </div>
       <h2 className={s.hero__title}>
         <span
