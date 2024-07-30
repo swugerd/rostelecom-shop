@@ -1,5 +1,6 @@
 import PagesLayout from '@/components/layouts/PagesLayout'
 import type { Metadata } from 'next'
+import './globalStyles/auth-popup.css'
 import './globalStyles/cart-popup.css'
 import './globalStyles/catalog-menu.css'
 import './globalStyles/footer.css'

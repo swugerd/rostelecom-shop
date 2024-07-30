@@ -1,14 +1,19 @@
 'use client'
+import { $openAuthPopup } from '@/context/auth'
 import {
   $searchModal,
   $showQuickViewModal,
   $showSizeTable,
 } from '@/context/modals'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { handleCloseSearchModal } from '@/lib/utils/common'
+import {
+  handleCloseAuthPopup,
+  handleCloseSearchModal,
+} from '@/lib/utils/common'
 import { useUnit } from 'effector-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { FC, PropsWithChildren } from 'react'
+import { FC, MutableRefObject, PropsWithChildren, useRef } from 'react'
+import AuthPopup from '../modules/AuthPopup/AuthPopup'
 import Footer from '../modules/Footer/Footer'
 import Header from '../modules/Header/Header'
 import SearchModal from '../modules/Header/SearchModal'
@@ -22,6 +27,19 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
 
   const showQuickViewModal = useUnit($showQuickViewModal)
   const showSizeTable = useUnit($showSizeTable)
+  const openAuthPopup = useUnit($openAuthPopup)
+
+  const authWrapperRef = useRef() as MutableRefObject<HTMLDivElement>
+
+  const handleCloseAuthPopupByTarget = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    const target = e.target as Element
+
+    if (target === authWrapperRef.current) {
+      handleCloseAuthPopup()
+    }
+  }
 
   return (
     <>
@@ -29,6 +47,19 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
       {children}
       {isMedia800 && <MobileNavbar />}
       <AnimatePresence>
+        {openAuthPopup && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            className='auth-popup-wrapper'
+            onClick={handleCloseAuthPopupByTarget}
+            ref={authWrapperRef}
+          >
+            <AuthPopup />
+          </motion.div>
+        )}
         {searchModal && (
           <motion.div
             initial={{ opacity: 0, zIndex: 102 }}

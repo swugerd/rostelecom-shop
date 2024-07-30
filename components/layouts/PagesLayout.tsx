@@ -1,4 +1,5 @@
 'use client'
+import { $openAuthPopup } from '@/context/auth'
 import {
   $showQuickViewModal,
   $showSizeTable,
@@ -6,6 +7,7 @@ import {
 } from '@/context/modals'
 import {
   closeSizeTableByCheck,
+  handleCloseAuthPopup,
   removeOverflowHiddenFromBody,
 } from '@/lib/utils/common'
 import { useUnit } from 'effector-react'
@@ -15,6 +17,8 @@ import Layout from './Layout'
 const PagesLayout = ({ children }: { children: ReactNode }) => {
   const showQuickViewModal = useUnit($showQuickViewModal)
   const showSizeTable = useUnit($showSizeTable)
+
+  const openAuthPopup = useUnit($openAuthPopup)
 
   const handleCloseQuickViewModal = () => {
     removeOverflowHiddenFromBody()
@@ -34,6 +38,10 @@ const PagesLayout = ({ children }: { children: ReactNode }) => {
         <div
           className={`size-table-overlay ${showSizeTable ? 'overlay-active' : ''}`}
           onClick={handleCloseSizeTable}
+        />
+        <div
+          className={`auth-overlay ${openAuthPopup ? 'overlay-active' : ''}`}
+          onClick={handleCloseAuthPopup}
         />
       </body>
     </html>
