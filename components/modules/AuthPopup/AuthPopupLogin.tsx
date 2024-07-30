@@ -19,7 +19,7 @@ const AuthPopupLogin = ({ toggleAuth, isSideActive }: IAuthSideProps) => {
     handleSignIn({
       email: data.email,
       password: data.password,
-      isOauth: false,
+      isOAuth: false,
     })
 
   return (

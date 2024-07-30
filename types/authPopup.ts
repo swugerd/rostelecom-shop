@@ -9,7 +9,7 @@ export interface IInputs {
 export interface ISignUpFx {
   password: string
   email: string
-  isOauth?: boolean
+  isOAuth?: boolean
   name?: string
 }
 

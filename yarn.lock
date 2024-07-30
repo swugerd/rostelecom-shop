@@ -2,6 +2,18 @@
 # yarn lockfile v1
 
 
+"@eartho/one-client-js@^2.0.16":
+  version "2.0.16"
+  resolved "https://registry.yarnpkg.com/@eartho/one-client-js/-/one-client-js-2.0.16.tgz#977bf08f385afd68d362d10615db020ad3982f30"
+  integrity sha512-lIHcFY84q3NPIBZQ5Q4nGKjUC+UeAuIhYEx/bQJybV1cUUef/8SJEgQsHXtBV0Eq2np5RCcAIVQ54dYDVlnVnw==
+
+"@eartho/one-client-react@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@eartho/one-client-react/-/one-client-react-2.1.0.tgz#3f114f0eaf8aaaf67dae5e595f5db567d4bf6b1b"
+  integrity sha512-dDAQYlhGf8VKl9qrRIfZ80388NhYJUM4k2wClrSqB3UmVpQX9Ejl75nEpLgwNlUy+d1pktDI3XmE+ETZCXGStQ==
+  dependencies:
+    "@eartho/one-client-js" "^2.0.16"
+
 "@emnapi/runtime@^1.1.1":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@emnapi/runtime/-/runtime-1.2.0.tgz#71d018546c3a91f3b51106530edbc056b9f2f2e3"

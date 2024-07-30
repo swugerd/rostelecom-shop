@@ -34,11 +34,11 @@ export const $auth = auth
 sample({
   clock: handleSignUp,
   source: $auth,
-  fn: (_, { name, email, password, isOauth }) => ({
+  fn: (_, { name, email, password, isOAuth }) => ({
     name,
     password,
     email,
-    isOauth,
+    isOAuth,
   }),
   target: signUpFx,
 })
@@ -46,11 +46,11 @@ sample({
 sample({
   clock: handleSignIn,
   source: $auth,
-  fn: (_, { name, email, password, isOauth }) => ({
+  fn: (_, { name, email, password, isOAuth }) => ({
     name,
     password,
     email,
-    isOauth,
+    isOAuth,
   }),
   target: signInFx,
 })

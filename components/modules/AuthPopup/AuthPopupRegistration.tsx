@@ -24,7 +24,7 @@ const AuthPopupRegistration = ({
       name: data.name,
       email: data.email,
       password: data.password,
-      isOauth: false,
+      isOAuth: false,
     })
 
   return (
