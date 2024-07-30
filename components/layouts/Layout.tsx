@@ -1,5 +1,9 @@
 'use client'
-import { $searchModal, $showQuickViewModal } from '@/context/modals'
+import {
+  $searchModal,
+  $showQuickViewModal,
+  $showSizeTable,
+} from '@/context/modals'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { handleCloseSearchModal } from '@/lib/utils/common'
 import { useUnit } from 'effector-react'
@@ -10,11 +14,14 @@ import Header from '../modules/Header/Header'
 import SearchModal from '../modules/Header/SearchModal'
 import MobileNavbar from '../modules/MobileNavbar/MobileNavbar'
 import QuickViewModal from '../modules/QuickViewModal/QuickViewModal'
+import SzieTable from '../modules/SizeTable/SzieTable'
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const isMedia800 = useMediaQuery(800)
   const searchModal = useUnit($searchModal)
+
   const showQuickViewModal = useUnit($showQuickViewModal)
+  const showSizeTable = useUnit($showSizeTable)
 
   return (
     <>
@@ -29,6 +36,15 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
             exit={{ opacity: 0 }}
           >
             <SearchModal />
+          </motion.div>
+        )}
+        {showSizeTable && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <SzieTable />
           </motion.div>
         )}
       </AnimatePresence>
