@@ -10,7 +10,7 @@ import { useUnit } from 'effector-react'
 import { HTMLAttributes, useState } from 'react'
 import AddToCartBtn from '../ProductListItem/AddToCartBtn'
 
-const SzieTable = () => {
+const SizeTable = () => {
   const { lang, translations } = useLang()
   const showQuickViewModal = useUnit($showQuickViewModal)
 
@@ -283,4 +283,4 @@ const SzieTable = () => {
   )
 }
 
-export default SzieTable
+export default SizeTable

@@ -14,7 +14,7 @@ import Header from '../modules/Header/Header'
 import SearchModal from '../modules/Header/SearchModal'
 import MobileNavbar from '../modules/MobileNavbar/MobileNavbar'
 import QuickViewModal from '../modules/QuickViewModal/QuickViewModal'
-import SzieTable from '../modules/SizeTable/SzieTable'
+import SzieTable from '../modules/SizeTable/SizeTable'
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const isMedia800 = useMediaQuery(800)
