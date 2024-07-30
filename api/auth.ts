@@ -13,6 +13,11 @@ export const oauthFx = createEffect(
         email,
       })
 
+      await api.post('/api/users/email', {
+        password,
+        email,
+      })
+
       onAuthSuccess('Login successful', data)
 
       return data.user
