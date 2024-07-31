@@ -1,4 +1,6 @@
+import { setIsAuth } from '@/context/auth'
 import { onAuthSuccess } from '@/lib/utils/auth'
+import { handleJWTError } from '@/lib/utils/error'
 import { ISignUpFx } from '@/types/authPopup'
 import { createEffect } from 'effector'
 import toast from 'react-hot-toast'
@@ -77,3 +79,24 @@ export const signInFx = createEffect(
     return data
   }
 )
+
+export const loginCheckFx = createEffect(async ({ jwt }: { jwt: string }) => {
+  try {
+    const { data } = await api.get('/api/users/login-check', {
+      headers: { Authorization: `Bearer ${jwt}` },
+    })
+
+    if (data?.error) {
+      handleJWTError(data.error.name, {
+        repeatRequestMethodName: 'loginCheckFx',
+      })
+      return
+    }
+
+    setIsAuth(true)
+
+    return data.user
+  } catch (error) {
+    toast.error((error as Error).message)
+  }
+})
