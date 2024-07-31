@@ -18,14 +18,24 @@ import QuickViewModalSlider from './QuickViewModalSlider'
 
 const QuickViewModal = () => {
   const { translations, lang } = useLang()
-  const { selectedSize, setSelectedSize } = useCartAction()
-  const { product } = useCartAction()
+  const {
+    selectedSize,
+    setSelectedSize,
+    product,
+    count,
+    handleAddToCart,
+    addToCartSpinner,
+    updateCountSpinner,
+    allCurrentCartItemCount,
+  } = useCartAction()
   const images = useProductImages(product)
 
   const handleCloseModal = () => {
     removeOverflowHiddenFromBody()
     closeQuickViewModal()
   }
+
+  const addToCart = () => handleAddToCart(count)
 
   return (
     <div className={s.modal}>
@@ -112,6 +122,13 @@ const QuickViewModal = () => {
               <AddToCartBtn
                 className={s.modal__right__bottom__add}
                 text={translations[lang].product.to_cart}
+                handleAddToCart={addToCart}
+                addToCartSpinner={addToCartSpinner || updateCountSpinner}
+                btnDisabled={
+                  addToCartSpinner ||
+                  updateCountSpinner ||
+                  allCurrentCartItemCount === +product.inStock
+                }
               />
             </div>
           </div>

@@ -4,6 +4,7 @@ import {
   getAuthRouteData,
   parseJwt,
 } from '@/lib/utils/api-routes'
+import { IUser } from '@/types/user'
 import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
@@ -18,9 +19,16 @@ export async function GET(req: Request) {
       return NextResponse.json(validateTokenResult)
     }
 
-    const user = await findUserByEmail(db, parseJwt(token as string).email)
+    const user = (await findUserByEmail(
+      db,
+      parseJwt(token as string).email
+    )) as unknown as IUser
 
-    return NextResponse.json({ status: 200, message: 'token is valid', user })
+    return NextResponse.json({
+      status: 200,
+      message: 'token is valid',
+      user: { email: user.email, name: user.name, _id: user?._id },
+    })
   } catch (error) {
     throw new Error((error as Error).message)
   }

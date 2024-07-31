@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt, { VerifyErrors } from 'jsonwebtoken'
-import { Db, MongoClient } from 'mongodb'
+import { Db, MongoClient, ObjectId } from 'mongodb'
+import { NextResponse } from 'next/server'
 import { shuffle } from './common'
 
 export const getDbAndReqBody = async (
@@ -29,10 +30,7 @@ export const getNewAndBestsellerGoods = async (db: Db, fieldName: string) => {
       )
       .slice(0, 2),
     ...accessories
-      .filter(
-        (item) =>
-          item[fieldName] && Object.values(item.sizes).some((value) => value)
-      )
+      .filter((item) => item[fieldName] && !Object.values(item.sizes).length)
       .slice(0, 2),
   ])
 }
@@ -136,3 +134,75 @@ export const isValidAccessToken = async (token: string | undefined) => {
 
 export const parseJwt = (token: string) =>
   JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
+
+export const getDataFromDBByCollection = async (
+  clientPromise: Promise<MongoClient>,
+  req: Request,
+  collection: string
+) => {
+  const { db, validateTokenResult, token } = await getAuthRouteData(
+    clientPromise,
+    req,
+    false
+  )
+
+  if (validateTokenResult.status !== 200) {
+    return NextResponse.json(validateTokenResult)
+  }
+
+  const user = await findUserByEmail(db, parseJwt(token as string).email)
+  const items = await db
+    .collection(collection)
+    .find({ userId: user?._id })
+    .toArray()
+
+  return NextResponse.json(items)
+}
+
+export const replaceProductsInCollection = async (
+  clientPromise: Promise<MongoClient>,
+  req: Request,
+  collection: string
+) => {
+  const { db, validateTokenResult, reqBody, token } = await getAuthRouteData(
+    clientPromise,
+    req
+  )
+
+  if (validateTokenResult.status !== 200) {
+    return NextResponse.json(validateTokenResult)
+  }
+
+  if (!reqBody.items) {
+    return NextResponse.json({
+      message: 'items fields is required',
+      status: 404,
+    })
+  }
+
+  const user = await db
+    .collection('users')
+    .findOne({ email: parseJwt(token as string).email })
+
+  const items = (reqBody.items as { productId: string }[]).map((item) => ({
+    userId: user?._id,
+    ...item,
+    productId: new ObjectId(item.productId),
+  }))
+
+  await db.collection(collection).deleteMany({ userId: user?._id })
+
+  if (!items.length) {
+    return NextResponse.json({
+      status: 201,
+      items: [],
+    })
+  }
+
+  await db.collection(collection).insertMany(items)
+
+  return NextResponse.json({
+    status: 201,
+    items,
+  })
+}

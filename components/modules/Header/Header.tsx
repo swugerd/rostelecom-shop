@@ -1,9 +1,12 @@
 'use client'
-import { loginCheckFx } from '@/api/auth'
 import Logo from '@/components/elements/Logo/Logo'
+import { AllowedLangs } from '@/constants/lang'
 import { $isAuth } from '@/context/auth'
+import { addProductsFromLSToCart, setCartFromLS } from '@/context/cart'
+import { setLang } from '@/context/lang'
 import { openMenu, openSearchModal } from '@/context/modals'
-import { $user } from '@/context/user'
+import { $user, loginCheckFx } from '@/context/user'
+import { useCartByAuth } from '@/hooks/useCartByAuth'
 import { useLang } from '@/hooks/useLang'
 import {
   addOverflowHiddenToBody,
@@ -24,8 +27,9 @@ const Header = () => {
   const isAuth = useUnit($isAuth)
   const loginCheckSpinner = useUnit(loginCheckFx.pending)
   const user = useUnit($user)
+  const currentCartByAuth = useCartByAuth()
 
-  console.log(user)
+  console.log(currentCartByAuth)
 
   const handleOpenMenu = () => {
     addOverflowHiddenToBody()
@@ -38,8 +42,35 @@ const Header = () => {
   }
 
   useEffect(() => {
+    const lang = JSON.parse(localStorage.getItem('lang') as string)
+    const cart = JSON.parse(localStorage.getItem('cart') as string)
+
+    if (lang) {
+      if (lang === AllowedLangs.RU || lang === AllowedLangs.EN) {
+        setLang(lang)
+      }
+    }
+
+    if (cart) {
+      setCartFromLS(cart)
+    }
+
     triggerLoginCheck()
   }, [])
+
+  useEffect(() => {
+    if (isAuth) {
+      const auth = JSON.parse(localStorage.getItem('auth') as string)
+      const cartFromLS = JSON.parse(localStorage.getItem('cart') as string)
+
+      if (cartFromLS && Array.isArray(cartFromLS)) {
+        addProductsFromLSToCart({
+          jwt: auth.accessToken,
+          cartItems: cartFromLS,
+        })
+      }
+    }
+  }, [isAuth])
 
   return (
     <header className='header'>

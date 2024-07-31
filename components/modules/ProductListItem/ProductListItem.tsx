@@ -3,14 +3,23 @@
 import ProductAvailable from '@/components/elements/ProductAvailable/ProductAvailable'
 import ProductItemActionBtn from '@/components/elements/ProductItemActionBtn/ProductItemActionBtn'
 import ProductSubtitle from '@/components/elements/ProductSubtitle/ProductSubtitle'
+import { productWithoutSizes } from '@/constants/product'
 import { setCurrentProduct } from '@/context/goods'
 import { showQuickViewModal } from '@/context/modals'
+import { useCartAction } from '@/hooks/useCartAction'
 import { useLang } from '@/hooks/useLang'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { addOverflowHiddenToBody, formatPrice } from '@/lib/utils/common'
+import { addProductToCartBySizeTable } from '@/lib/utils/cart'
+import {
+  addOverflowHiddenToBody,
+  formatPrice,
+  isItemInList,
+} from '@/lib/utils/common'
 import sAd from '@/styles/ad/index.module.scss'
 import s from '@/styles/product-list-item/index.module.scss'
 import { IProductsListItemProps } from '@/types/modules'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import Link from 'next/link'
 import ProductLabel from './ProductLabel'
@@ -19,12 +28,18 @@ const ProductListItem = ({ item, title }: IProductsListItemProps) => {
   const { lang, translations } = useLang()
   const isMedia800 = useMediaQuery(800)
   const isTitleForNew = title === translations[lang].main_page.new_title
+  const { addToCartSpinner, setAddToCartSpinner, currentCartByAuth } =
+    useCartAction()
+  const isProductInCart = isItemInList(currentCartByAuth, item._id)
 
   const handleShowQuickViewModal = () => {
     addOverflowHiddenToBody()
     showQuickViewModal()
     setCurrentProduct(item)
   }
+
+  const addToCart = () =>
+    addProductToCartBySizeTable(item, setAddToCartSpinner, 1)
 
   return (
     <>
@@ -109,9 +124,29 @@ const ProductListItem = ({ item, title }: IProductsListItemProps) => {
             />
             <span>{formatPrice(+item.price)} &#8381;</span>
           </div>
-          <button className={`btn-reset ${s.list__item__cart}`}>
-            {translations[lang].product.to_cart}
-          </button>
+          {productWithoutSizes.includes(item.type) ? (
+            <button
+              onClick={addToCart}
+              className={`btn-reset ${s.list__item__cart} ${isProductInCart ? s.list__item__cart_added : ''}`}
+              disabled={addToCartSpinner}
+              style={addToCartSpinner ? { minWidth: 125, height: 48 } : {}}
+            >
+              {addToCartSpinner ? (
+                <FontAwesomeIcon icon={faSpinner} spin color='#fff' />
+              ) : isProductInCart ? (
+                translations[lang].product.in_cart
+              ) : (
+                translations[lang].product.to_cart
+              )}
+            </button>
+          ) : (
+            <button
+              className={`btn-reset ${s.list__item__cart}`}
+              onClick={addToCart}
+            >
+              {translations[lang].product.to_cart}
+            </button>
+          )}
         </li>
       )}
     </>
