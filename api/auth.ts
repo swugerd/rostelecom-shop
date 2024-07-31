@@ -1,6 +1,6 @@
 import { setIsAuth } from '@/context/auth'
 import { onAuthSuccess } from '@/lib/utils/auth'
-import { handleJWTError } from '@/lib/utils/error'
+import { handleJWTError } from '@/lib/utils/errors'
 import { ISignUpFx } from '@/types/authPopup'
 import { createEffect } from 'effector'
 import toast from 'react-hot-toast'
@@ -99,4 +99,12 @@ export const loginCheckFx = createEffect(async ({ jwt }: { jwt: string }) => {
   } catch (error) {
     toast.error((error as Error).message)
   }
+})
+
+export const refreshTokenFx = createEffect(async ({ jwt }: { jwt: string }) => {
+  const { data } = await api.post('/api/users/refresh', { jwt })
+
+  localStorage.setItem('auth', JSON.stringify(data))
+
+  return data
 })
