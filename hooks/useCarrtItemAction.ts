@@ -1,3 +1,5 @@
+import { deleteProductFromCart, setCartFromLS } from '@/context/cart'
+import { deleteProductFromLS, isUserAuth } from '@/lib/utils/common'
 import { ICartItem } from '@/types/cart'
 import { useState } from 'react'
 import { usePriceAction } from './usePriceAction'
@@ -30,6 +32,27 @@ export const useCartItemAction = (cartItem: ICartItem) => {
     decreasePrice()
   }
 
+  const handleDeleteCartItem = () => {
+    if (!isUserAuth()) {
+      deleteProductFromLS(
+        cartItem.clientId,
+        'cart',
+        setCartFromLS,
+        'Удалено из корзины!'
+      )
+      return
+    }
+
+    const auth = JSON.parse(localStorage.getItem('auth') as string)
+
+    deleteProductFromLS(cartItem.clientId, 'cart', setCartFromLS, '', false)
+    deleteProductFromCart({
+      jwt: auth.accessToken,
+      id: cartItem._id,
+      setSpinner: setDeleteSpinner,
+    })
+  }
+
   return {
     deleteSpinner,
     setDeleteSpinner,
@@ -43,5 +66,6 @@ export const useCartItemAction = (cartItem: ICartItem) => {
     setFrom,
     setTo,
     animatedPrice,
+    handleDeleteCartItem,
   }
 }

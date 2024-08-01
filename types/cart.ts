@@ -40,3 +40,5 @@ export interface IDeleteCartItemBtnProps {
   callback: VoidFunction
   className?: string
 }
+
+export type IDeleteCartItemsFx = IBaseEffectProps

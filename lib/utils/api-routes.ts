@@ -206,3 +206,24 @@ export const replaceProductsInCollection = async (
     items,
   })
 }
+
+export const deleteProduct = async (
+  clientPromise: Promise<MongoClient>,
+  req: Request,
+  id: string,
+  collection: string
+) => {
+  const { db, validateTokenResult } = await getAuthRouteData(
+    clientPromise,
+    req,
+    false
+  )
+
+  if (validateTokenResult.status !== 200) {
+    return NextResponse.json(validateTokenResult)
+  }
+
+  await db.collection(collection).deleteOne({ _id: new ObjectId(id) })
+
+  return NextResponse.json({ status: 204, id })
+}
