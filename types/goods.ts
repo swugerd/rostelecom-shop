@@ -10,12 +10,19 @@ export interface IProductSizesItemProps {
   currentSize: [string, boolean]
   selectedSize: string
   setSelectedSize: Dispatch<SetStateAction<string>>
-  currentCartItems: []
+  currentCartItems: ICartItem[]
 }
 
 export interface IProductCounterProps {
   className: string
   count: number
+  setCount: Dispatch<SetStateAction<number>>
+  cartItem: ICartItem
+  updateCountAsync: boolean
+  initialCount?: number
+  totalCount?: number
+  increasePrice?: VoidFunction
+  decreasePrice?: VoidFunction
 }
 
 export interface IAddToCartBtnProps {

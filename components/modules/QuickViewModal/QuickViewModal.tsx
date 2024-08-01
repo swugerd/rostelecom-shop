@@ -7,6 +7,7 @@ import { useProductImages } from '@/hooks/useProductImages'
 import { formatPrice, removeOverflowHiddenFromBody } from '@/lib/utils/common'
 import productS from '@/styles/product-list-item/index.module.scss'
 import s from '@/styles/quick-view-modal/index.module.scss'
+import { ICartItem } from '@/types/cart'
 import Link from 'next/link'
 import AddToCartBtn from '../ProductListItem/AddToCartBtn'
 import ProductColor from '../ProductListItem/ProductColor'
@@ -27,6 +28,9 @@ const QuickViewModal = () => {
     addToCartSpinner,
     updateCountSpinner,
     allCurrentCartItemCount,
+    currentCartItems,
+    setCount,
+    existingItem,
   } = useCartAction()
   const images = useProductImages(product)
 
@@ -93,7 +97,7 @@ const QuickViewModal = () => {
                     currentSize={[key, value]}
                     selectedSize={selectedSize}
                     setSelectedSize={setSelectedSize}
-                    currentCartItems={[]}
+                    currentCartItems={currentCartItems}
                   />
                 ))}
               </ul>
@@ -109,7 +113,12 @@ const QuickViewModal = () => {
               {!!selectedSize ? (
                 <ProductCounter
                   className={`counter ${s.modal__right__bottom__counter}`}
-                  count={0}
+                  count={count}
+                  totalCount={+product?.inStock}
+                  initialCount={+(existingItem?.count || 1)}
+                  setCount={setCount}
+                  cartItem={existingItem as ICartItem}
+                  updateCountAsync={false}
                 />
               ) : (
                 <div

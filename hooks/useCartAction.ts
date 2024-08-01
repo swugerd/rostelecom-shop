@@ -52,7 +52,7 @@ export const useCartAction = (isSizeTable = false) => {
           : +existingItem.count + 1,
       })
 
-      addCartItemToLs(product, selectedSize, count)
+      addCartItemToLs(product, selectedSize, countFromCounter || 1)
       return
     }
 
