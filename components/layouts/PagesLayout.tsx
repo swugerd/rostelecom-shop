@@ -12,12 +12,16 @@ import {
 } from '@/lib/utils/common'
 import { EarthoOneProvider } from '@eartho/one-client-react'
 import { useUnit } from 'effector-react'
+import { motion } from 'framer-motion'
 import { ReactNode, useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
+import CookieAlert from '../modules/CookieAlert/CookieAlert'
 import Layout from './Layout'
 
 const PagesLayout = ({ children }: { children: ReactNode }) => {
   const [isClient, setIsClient] = useState(false)
+  const [cookieAlertOpen, setCookieAlertOpen] = useState(false)
+
   const showQuickViewModal = useUnit($showQuickViewModal)
   const showSizeTable = useUnit($showSizeTable)
 
@@ -30,7 +34,15 @@ const PagesLayout = ({ children }: { children: ReactNode }) => {
 
   const handleCloseSizeTable = () => closeSizeTableByCheck(showQuickViewModal)
 
-  useEffect(() => setIsClient(true), [])
+  useEffect(() => {
+    const checkCookie = document.cookie.indexOf('CookieBy=Rostelecom')
+
+    checkCookie != -1
+      ? setCookieAlertOpen(false)
+      : setTimeout(() => setCookieAlertOpen(true), 3000)
+
+    setIsClient(true)
+  }, [])
 
   return isClient ? (
     <EarthoOneProvider
@@ -52,6 +64,16 @@ const PagesLayout = ({ children }: { children: ReactNode }) => {
             className={`auth-overlay ${openAuthPopup ? 'overlay-active' : ''}`}
             onClick={handleCloseAuthPopup}
           />
+          {cookieAlertOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              className='cookie-popup'
+            >
+              <CookieAlert setcookieAlertOpen={setCookieAlertOpen} />
+            </motion.div>
+          )}
           <Toaster position='top-center' reverseOrder={false} />
         </body>
       </html>
