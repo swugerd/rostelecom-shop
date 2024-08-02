@@ -31,6 +31,7 @@ const CartPopup = forwardRef<HTMLDivElement, IWrappedComponentProps>(
           href='/cart'
           onMouseEnter={handleShowPopup}
         />
+        {!!currenCartByAuth.length && <span className='not-empty' />}
         <AnimatePresence>
           {open && (
             <motion.div

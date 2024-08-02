@@ -1,3 +1,4 @@
+import { AllowedLangs } from '@/constants/lang'
 import { closeAuthPopup, openAuthPopup, setIsAuth } from '@/context/auth'
 import { setCurrentProduct } from '@/context/goods'
 import {
@@ -161,4 +162,20 @@ export const deleteProductFromLS = <T>(
   localStorage.setItem(key, JSON.stringify(updatedItems))
   event(updatedItems)
   withToast && toast.success(message)
+}
+
+export const showCountMessage = (count: string, lang: string) => {
+  if (count == '11' || count == '12' || count == '13' || count == '14') {
+    return lang === AllowedLangs.RU ? 'товаров' : 'items'
+  }
+
+  if (count.endsWith('1')) {
+    return lang === AllowedLangs.RU ? 'товар' : 'item'
+  }
+
+  if (count.endsWith('2') || count.endsWith('3') || count.endsWith('4')) {
+    return lang === AllowedLangs.RU ? 'товара' : 'items'
+  }
+
+  return lang === AllowedLangs.RU ? 'товаров' : 'items'
 }

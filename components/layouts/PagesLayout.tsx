@@ -13,6 +13,7 @@ import {
 import { EarthoOneProvider } from '@eartho/one-client-react'
 import { useUnit } from 'effector-react'
 import { motion } from 'framer-motion'
+import { Next13ProgressBar } from 'next13-progressbar'
 import { ReactNode, useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import CookieAlert from '../modules/CookieAlert/CookieAlert'
@@ -51,6 +52,7 @@ const PagesLayout = ({ children }: { children: ReactNode }) => {
     >
       <html lang='en'>
         <body>
+          <Next13ProgressBar height='4px' color='#9466FF' showOnShallow />
           <Layout>{children}</Layout>
           <div
             className={`quick-view-modal-overlay ${showQuickViewModal ? 'overlay-active' : ''}`}

@@ -21,3 +21,9 @@ export interface IProductAvailableProps {
 export interface QuickViewModalSliderArrowProps extends CustomArrowProps {
   directionClassName: string
 }
+
+export interface IHeadingWithCountProps {
+  count: number
+  title: string
+  spinner?: boolean
+}
