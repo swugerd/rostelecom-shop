@@ -9,7 +9,7 @@ import {
 } from '@/context/cart'
 import { setLang } from '@/context/lang'
 import { openMenu, openSearchModal } from '@/context/modals'
-import { $user, loginCheckFx } from '@/context/user'
+import { loginCheckFx } from '@/context/user'
 import { useCartByAuth } from '@/hooks/useCartByAuth'
 import { useLang } from '@/hooks/useLang'
 import {
@@ -30,7 +30,7 @@ const Header = () => {
   const { lang, translations } = useLang()
   const isAuth = useUnit($isAuth)
   const loginCheckSpinner = useUnit(loginCheckFx.pending)
-  const user = useUnit($user)
+  // const user = useUnit($user)
   const currentCartByAuth = useCartByAuth()
 
   console.log(currentCartByAuth)
@@ -56,6 +56,10 @@ const Header = () => {
       }
     }
 
+    if (!cart || !cart?.length) {
+      setShouldShowEmpty(true)
+    }
+
     if (auth?.accessToken) {
       return
     }
@@ -63,9 +67,9 @@ const Header = () => {
     if (cart && Array.isArray(cart)) {
       if (!cart.length) {
         setShouldShowEmpty(true)
-        return
+      } else {
+        setCartFromLS(cart)
       }
-      setCartFromLS(cart)
     }
 
     triggerLoginCheck()
