@@ -10,7 +10,6 @@ import {
 import { setLang } from '@/context/lang'
 import { openMenu, openSearchModal } from '@/context/modals'
 import { loginCheckFx } from '@/context/user'
-import { useCartByAuth } from '@/hooks/useCartByAuth'
 import { useLang } from '@/hooks/useLang'
 import {
   addOverflowHiddenToBody,
@@ -31,9 +30,9 @@ const Header = () => {
   const isAuth = useUnit($isAuth)
   const loginCheckSpinner = useUnit(loginCheckFx.pending)
   // const user = useUnit($user)
-  const currentCartByAuth = useCartByAuth()
+  // const currentCartByAuth = useCartByAuth()
 
-  console.log(currentCartByAuth)
+  // console.log(currentCartByAuth)
 
   const handleOpenMenu = () => {
     addOverflowHiddenToBody()

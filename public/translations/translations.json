@@ -76,7 +76,9 @@
             "accessories": "Accessories",
             "office": "Office",
             "souvenirs": "Souvenirs",
-            "order": "Placing an order"
+            "order": "Placing an order",
+            "personal_data_policy": "Data processing policy",
+            "privacy_policy": "Privacy policy"
         },
         "footer": {
             "copyright": "Rostelectom All rights reserverd",
@@ -322,7 +324,9 @@
             "accessories": "Аксесуары",
             "office": "Концелярия",
             "souvenirs": "Сувениры",
-            "order": "Оформление заказа"
+            "order": "Оформление заказа",
+            "personal_data_policy": "Политика обработки данных",
+            "privacy_policy": "Политика конфиденциальности"
         },
         "footer": {
             "copyright": "Ростелеком Все права защищены",

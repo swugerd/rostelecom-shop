@@ -11,6 +11,7 @@ const HeroSlide = ({ slide }: { slide: IHeroSlide }) => (
       src={slide.image}
       alt={slide.title}
       className={s.hero__slider__slide__img}
+      loading='eager'
     />
     <HeroSlideTooltip title={slide.title} image={slide.image} />
   </>
