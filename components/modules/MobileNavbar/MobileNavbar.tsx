@@ -5,6 +5,7 @@ import {
   openCatalogMenu,
   openMenu,
 } from '@/context/modals'
+import { useCartByAuth } from '@/hooks/useCartByAuth'
 import { useLang } from '@/hooks/useLang'
 import { addOverflowHiddenToBody } from '@/lib/utils/common'
 import Link from 'next/link'
@@ -12,6 +13,8 @@ import CatalogMenu from '../Header/CatalogMenu'
 
 const MobileNavbar = () => {
   const { lang, translations } = useLang()
+
+  const currenCartByAuth = useCartByAuth()
 
   const handleOpenMenu = () => {
     addOverflowHiddenToBody()
@@ -42,6 +45,9 @@ const MobileNavbar = () => {
           {translations[lang].breadcrumbs.favorites}
         </Link>
         <Link href='/cart' className='mobile-navbar__btn'>
+          {!!currenCartByAuth.length && (
+            <span className='not-empty not-empty-mobile' />
+          )}
           {translations[lang].breadcrumbs.cart}
         </Link>
         <button
