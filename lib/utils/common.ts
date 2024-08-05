@@ -1,5 +1,6 @@
 import { AllowedLangs } from '@/constants/lang'
 import { closeAuthPopup, openAuthPopup, setIsAuth } from '@/context/auth'
+import { setShouldShowEmpty } from '@/context/cart'
 import { setCurrentProduct } from '@/context/goods'
 import {
   closeSearchModal,
@@ -162,6 +163,10 @@ export const deleteProductFromLS = <T>(
   localStorage.setItem(key, JSON.stringify(updatedItems))
   event(updatedItems)
   withToast && toast.success(message)
+
+  if (!updatedItems.length) {
+    setShouldShowEmpty(true)
+  }
 }
 
 export const showCountMessage = (count: string, lang: string) => {

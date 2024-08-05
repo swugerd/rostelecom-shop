@@ -2,6 +2,7 @@ import api from '@/api/apiInstance'
 import {
   addProductToCartFx,
   deleteCartItemFx,
+  getCartItemsFx,
   updateCartItemCountFx,
 } from '@/api/cart'
 import { handleJWTError } from '@/lib/utils/errors'
@@ -55,9 +56,11 @@ export const addProductsFromLSToCart =
 export const updateCartItemCount = cart.createEvent<IUpdateCartItemCountFx>()
 export const setTotalPrice = cart.createEvent<number>()
 export const deleteProductFromCart = cart.createEvent<IDeleteCartItemsFx>()
+export const setShouldShowEmpty = cart.createEvent<boolean>()
 
 export const $cart = cart
   .createStore<ICartItem[]>([])
+  .on(getCartItemsFx.done, (_, { result }) => result)
   .on(addProductsFromLSToCartFx.done, (_, { result }) => result.items)
   .on(addProductToCartFx.done, (cart, { result }) => [
     ...new Map(
@@ -80,6 +83,17 @@ export const $cartFromLs = cart
 export const $totalPrice = cart
   .createStore<number>(0)
   .on(setTotalPrice, (_, value) => value)
+
+export const $shouldShowEmpty = cart
+  .createStore<boolean>(false)
+  .on(setShouldShowEmpty, (_, value) => value)
+
+sample({
+  clock: loadCartitems,
+  source: $cart,
+  fn: (_, data) => data,
+  target: getCartItemsFx,
+})
 
 sample({
   clock: addProductToCart,

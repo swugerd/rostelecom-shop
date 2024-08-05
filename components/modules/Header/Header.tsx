@@ -2,7 +2,11 @@
 import Logo from '@/components/elements/Logo/Logo'
 import { AllowedLangs } from '@/constants/lang'
 import { $isAuth } from '@/context/auth'
-import { addProductsFromLSToCart, setCartFromLS } from '@/context/cart'
+import {
+  addProductsFromLSToCart,
+  setCartFromLS,
+  setShouldShowEmpty,
+} from '@/context/cart'
 import { setLang } from '@/context/lang'
 import { openMenu, openSearchModal } from '@/context/modals'
 import { $user, loginCheckFx } from '@/context/user'
@@ -42,6 +46,7 @@ const Header = () => {
   }
 
   useEffect(() => {
+    const auth = JSON.parse(localStorage.getItem('auth') as string)
     const lang = JSON.parse(localStorage.getItem('lang') as string)
     const cart = JSON.parse(localStorage.getItem('cart') as string)
 
@@ -51,7 +56,15 @@ const Header = () => {
       }
     }
 
-    if (cart) {
+    if (auth?.accessToken) {
+      return
+    }
+
+    if (cart && Array.isArray(cart)) {
+      if (!cart.length) {
+        setShouldShowEmpty(true)
+        return
+      }
       setCartFromLS(cart)
     }
 

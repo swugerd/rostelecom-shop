@@ -1,6 +1,10 @@
 /* eslint-disable indent */
 import { productWithoutSizes } from '@/constants/product'
-import { addProductToCart, setCartFromLS } from '@/context/cart'
+import {
+  addProductToCart,
+  setCartFromLS,
+  setShouldShowEmpty,
+} from '@/context/cart'
 import { ICartItem } from '@/types/cart'
 import { IProduct } from '@/types/common'
 import toast from 'react-hot-toast'
@@ -46,6 +50,8 @@ export const addCartItemToLs = (
   if (!cartFromLS) {
     cartFromLS = []
   }
+
+  setShouldShowEmpty(false)
 
   const existingItem = cartFromLS.find(
     (item) => item.productId === product._id && item.size === selectedSize

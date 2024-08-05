@@ -3,6 +3,8 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { formatPrice } from '@/lib/utils/common'
 import s from '@/styles/cart-page/index.module.scss'
 import { ICartItem } from '@/types/cart'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import ProductCounter from '../ProductListItem/ProductCounter'
 
@@ -27,7 +29,11 @@ const CartListItem = ({ item }: { item: ICartItem }) => {
         className={`btn-reset ${s.cart__list__item__delete}`}
         onClick={handleDeleteCartItem}
       >
-        <span />
+        {deleteSpinner ? (
+          <FontAwesomeIcon icon={faSpinner} spin color='#fff' />
+        ) : (
+          <span />
+        )}
       </button>
       <div
         className={`${s.cart__list__item__img} ${s.cart__list__item__block}`}
